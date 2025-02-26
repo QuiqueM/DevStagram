@@ -50,7 +50,7 @@
         </div>
 
         <input type="submit" value="Crear cuenta"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-3 w-full rounded-lg cursor-pointer uppercase transition-colors">
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-3 w-full rounded-lg cursor-pointer uppercase transition-colors" />
       </form>
     </div>
   </div>
