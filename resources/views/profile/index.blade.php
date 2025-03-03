@@ -6,13 +6,14 @@
 @section('content')
   <div class="md:flex md:justify-center">
     <div class="md:1/2 bg-white shadow p-6 rounded-md">
-      <form action="mt-10 md:mt-0">
+      <form action="{{ route('profile.store') }}" class="mt-10 md:mt-0" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="mb-5">
           <label for="username" class="mb-2 font-bold uppercase text-gray-500 block">username</label>
           <input id="username" name="username" type="text" placeholder="Tu nombre de usuario"
             class="border border-gray-400 p-3 w-full rounded-lg @error('username') border-red-500 @enderror"
             value="{{ auth()->user()->username }}">
-          @error('name')
+          @error('username')
             <div class="text-red-500 text-sm">{{ $message }}</div>
           @enderror
         </div>
