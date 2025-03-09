@@ -21,8 +21,8 @@ class ProfileController extends Controller
             'username' => ['required', 'string', 'max:255', 'alpha_dash', 'unique:users,username,' . auth()->user()->id, 'not_in:login,logout,register,edit-profile'],
 
         ]);
-        if ($request->image) {
-            $image = $request->file('image');
+        if ($request->imageProfile) {
+            $image = $request->file('imageProfile');
             $nameImage = Str::uuid() . '.' . $image->extension();
             $imageServer = Image::read($image)->resize(1000, 1000);
             $imagePath = public_path('profiles/' . $nameImage);
@@ -33,6 +33,6 @@ class ProfileController extends Controller
         $user->image = $nameImage ?? auth()->user()->image ?? '';
         $user->save();
 
-        return redirect()->route('post.index', $user->username);
+        return redirect()->route('posts.index', $user->username);
     }
 }
