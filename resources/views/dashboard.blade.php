@@ -7,7 +7,8 @@
   <div class="flex justify-center">
     <div class="w-full md:w-8/12 lg:6/12 flex flex-col md:flex-row items-center">
       <div class="w-8/12 lg:w-6/12 px-5">
-        <img src="{{ $user->image ? asset('profiles') . '/'. $user->image : asset('img/avatar-1.jpg')}}" alt="Imagen de usuario" class="w-full h-full object-cover rounded-lg">
+        <img src="{{ $user->image ? asset('profiles') . '/' . $user->image : asset('img/avatar-1.jpg') }}"
+          alt="Imagen de usuario" class="w-full h-full object-cover rounded-lg">
       </div>
       <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center md:items-start py-10 md:py-10">
         <div class="flex gap-3 items-center">
@@ -24,9 +25,29 @@
             @endif
           @endauth
         </div>
-        <p class="text-gray-500 text-sm"> 0 <span>Seguidores</span> </p>
-        <p class="text-gray-500 text-sm"> 0 <span>Siguiendo</span> </p>
+        <p class="text-gray-500 text-sm"> {{ $user->followers->count() }} <span> @choice('Seguidor|Seguidores', $user->followers->count())</span> </p>
+        <p class="text-gray-500 text-sm"> {{ $user->followings->count() }} <span> Siguiendo </span> </p>
         <p class="text-gray-500 text-sm"> {{ $posts->count() }} <span>Post</span> </p>
+        @auth
+          @if ($user->id !== auth()->user()->id)
+            @if (!$user->isFollowing(auth()->user()))
+              <form action="{{ route('users.follow', $user) }}" method="post">
+                @csrf
+                <button type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-5 text-xs font-bold cursor-pointer"> Seguir
+                </button>
+              </form>
+            @else
+              <form action="{{ route('users.follow', $user) }}" method="post">
+                @method('DELETE')
+                @csrf
+                <button type="submit"
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg mt-5 text-xs font-bold cursor-pointer">Dejar de Seguir
+                </button>
+              </form>
+            @endif
+          @endif
+        @endauth
       </div>
     </div>
   </div>

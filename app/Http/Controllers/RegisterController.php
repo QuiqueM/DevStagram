@@ -29,11 +29,12 @@ class RegisterController extends Controller
             'username' => Str::slug($request->username),
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'image' => ''
         ]);
 
         // autenticar un usuario
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
 
-        return redirect()->route('post.index');
+        return redirect()->route('posts.index');
     }
 }
